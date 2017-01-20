@@ -50,6 +50,7 @@ class Default extends Component {
     let metaTitle
     let meta
 
+    let contentWrapperClass = (fullWidth) ? styles.fullWidth : styles.page
     if (!isLoading && head) {
       metaTitle = head.metaTitle || head.title
       meta = [
@@ -66,6 +67,9 @@ class Default extends Component {
       { name: 'twitter:description', content: head.description },
       { name: 'description', content: head.description },
       ]
+      if (head.fullWidth) {
+        contentWrapperClass = (head.fullWidth) ? styles.fullWidth : styles.page
+      }
     }
     /* const linkTags = [
       {
@@ -82,8 +86,6 @@ class Default extends Component {
         {bodyContent}
       </BodyContainer>
     )
-
-    const contentWrapperClass = (fullWidth) ? styles.fullWidth : styles.page
 
     let customScript
     let inlineScripts
@@ -120,9 +122,10 @@ class Default extends Component {
         />
       )
     }
+    const pageClass = (head) ? `layout-${head.layout.toLowerCase()}` : ''
     const classes = classnames(contentWrapperClass, className)
     return (
-      <div>
+      <div id='base' className={pageClass}>
         <Helmet title={metaTitle} meta={meta} />
         <Header />
         <div className={classes}>
